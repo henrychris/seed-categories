@@ -17,6 +17,7 @@ async function main() {
     const categoryInserts = categories.map((category) => ({
         id: category.id,
         name: category.name,
+        breadcrumb: category.breadcrumb,
         attributes: mapAttributesToRecord(category.attributes),
         parentCategoryId: category.parent_id,
     }));
@@ -31,12 +32,14 @@ async function main() {
 function flattenVerticals(verticals: Vertical[]): {
     id: string;
     name: string;
+    breadcrumb: string;
     parent_id: string | null;
     attributes: CategoryAttribute[];
 }[] {
     const result: {
         id: string;
         name: string;
+        breadcrumb: string;
         parent_id: string | null;
         attributes: CategoryAttribute[];
     }[] = [];
@@ -45,6 +48,7 @@ function flattenVerticals(verticals: Vertical[]): {
         result.push({
             id: category.id,
             name: category.name,
+            breadcrumb: category.full_name,
             parent_id: parentId,
             attributes: category.attributes,
         });
